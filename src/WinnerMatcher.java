@@ -1,4 +1,3 @@
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -16,38 +15,41 @@ import org.opencv.imgproc.Imgproc;
  */
 
 public class WinnerMatcher {
+	static String win_path = "winner.png";
+	public static final int PLAYER1WIN = 1;
+	public static final int PLAYER2WIN = 2;
+	public static final int FAILED = -1;
 	Mat win;
 	Mat p1;
 	Mat p2;
-	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	}
 
-	public static void main(String args[]) {
-		new WinnerMatcher().judgeWinner();;
-	}
-
-	public WinnerMatcher() {
-		String win_path = "winner.png";
+	public WinnerMatcher(Mat p1, Mat p2) {
 		win = Imgcodecs.imread(win_path,Imgcodecs.IMREAD_COLOR);
 		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
-		String p1_path = "1p.png";
-		String p2_path = "2p.png";
-		System.out.println(fieldSize);
-		p1 = Imgcodecs.imread(p1_path);
-		Imgproc.resize(p1, p1, fieldSize);
-		p2 = Imgcodecs.imread(p2_path);
-		Imgproc.resize(p2, p2, fieldSize);
+		this.p1 = p1;
+		this.p2 = p2;
+		Imgproc.resize(this.p1, this.p1, fieldSize);
+		Imgproc.resize(this.p2, this.p2, fieldSize);
+	}
+	public WinnerMatcher(String p1_path, String p2_path) {
+		win = Imgcodecs.imread(win_path,Imgcodecs.IMREAD_COLOR);
+		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
+		this.p1 = Imgcodecs.imread(p1_path);
+		Imgproc.resize(this.p1, this.p1, fieldSize);
+		this.p2 = Imgcodecs.imread(p2_path);
+		Imgproc.resize(this.p2, this.p2, fieldSize);
 	}
 
-	public void judgeWinner() {
+	public int judgeWinner() {
 		double p1Win = matchWinner(p1,"P1");
 		double p2Win = matchWinner(p2,"P2");
-		if (p1Win < 0.6 && p2Win < 0.6) {
-			System.out.println("Draw or Failed Pattern matching");
-		} else {
-			System.out.println(p1Win > p2Win? "Player 1 Win!" : "Player 2 Win!");
+		if (p1Win < 0.6 && p2Win < 0.6)	{
+			return FAILED;
 		}
+		if (p1Win > p2Win) {
+			return PLAYER1WIN;
+		}
+		return PLAYER2WIN;
 	}
 
 	public double matchWinner(Mat field,String player) {
@@ -72,7 +74,7 @@ public class WinnerMatcher {
 			Imgproc.rectangle(resultImg, matching, matchEnd, new Scalar(255,0,0));
 		}
 		Imgcodecs.imwrite("res" + player + ".png", resultImg);
-		System.out.println("max color:" + max);
+		//System.out.println("max color:" + max);
 		return max;
 	}
 }
