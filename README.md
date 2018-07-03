@@ -1,4 +1,4 @@
-### WinnerMatcher
+### PuyoPuyoTetrisAutoCounter.PuyoPuyoTetrisAutoCounter
 WinnerMatcherは、ぷよぷよテトリスの1P,2Pそれぞれのフィールドの画像からどちらが勝者かを判定するプログラムです。
 
 フィールドの画像をテンプレート画像のサイズに合わせるために、指定の縦横比のフィールドの画像を与える必要があります。将来的には動画やプレイ画面をキャプチャし、自動でカウントを行うプログラムにしたいと考えています。

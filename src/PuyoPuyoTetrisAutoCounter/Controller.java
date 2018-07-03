@@ -1,34 +1,25 @@
+package PuyoPuyoTetrisAutoCounter;
+
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
-import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
-    static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    }
-
     Stage stage;
-    TestCapture testCapture;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            testCapture = new TestCapture();
-        } catch (AWTException e) {
-            // TODO 自動生成された catch ブロック
-            System.out.println("Catch AWTException");
-            e.printStackTrace();
-        }
+
     }
 
     public void setStage (Stage stage) {
         this.stage = stage;
     }
 
-    /*
     public void judge() {
         Mat p1 = Imgcodecs.imread("1p.png");
         Mat p2 = Imgcodecs.imread("2p.png");
@@ -47,5 +38,4 @@ public class Controller implements Initializable{
                 break;
         }
     }
-    */
 }

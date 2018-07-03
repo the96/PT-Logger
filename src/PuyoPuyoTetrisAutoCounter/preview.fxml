@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121">
+   <items>
+      <ImageView fx:id="player1view" fitHeight="334.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="player2view" fitHeight="334.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" />
+   </items>
+</SplitPane>
