@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="150.0" maxWidth="335.0" minHeight="150.0" minWidth="335.0" prefHeight="150.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PuyoPuyoTetrisAutoCounter.SelectAreaDialog">
+<GridPane maxHeight="150.0" maxWidth="335.0" minHeight="150.0" minWidth="335.0" prefHeight="150.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PuyoPuyoTetrisAutoCounter.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
     <ColumnConstraints hgrow="NEVER" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" />

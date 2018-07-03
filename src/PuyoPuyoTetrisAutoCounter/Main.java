@@ -17,13 +17,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("window.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Puyopuyo Tetris Winner matcher");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setHeight(600);
-        primaryStage.setWidth(600);
         primaryStage.show();
         Controller controller = loader.getController();
         controller.setStage(primaryStage);

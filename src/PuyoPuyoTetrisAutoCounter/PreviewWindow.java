@@ -54,7 +54,7 @@ public class PreviewWindow implements Initializable {
                 player1view.setImage(img);
                 BufferedImage bufferedImage2 = p2Capture.capture();
                 WritableImage img2 = SwingFXUtils.toFXImage(bufferedImage2,null);
-                player1view.setImage(img2);
+                player2view.setImage(img2);
                 time = System.currentTimeMillis() - time;
                 if (time <= 16) {
                     try {
