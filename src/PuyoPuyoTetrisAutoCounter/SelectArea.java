@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SelectArea extends JFrame implements ComponentListener,NativeMouseInputListener {
-    TestCapture testCapture;
+    Capture capture;
     Rectangle area;
     JLabel label;
     long time;
@@ -37,7 +37,7 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
         this.getContentPane().add(label);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        testCapture = new TestCapture();
+        capture = new Capture();
         reloadBackground();
         time = System.currentTimeMillis();
         flag = false;
@@ -50,6 +50,11 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {
             e.printStackTrace();
+        }
+        try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -89,8 +94,8 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
                 area = new Rectangle(this.getX() + insets.left,this.getY() + insets.top, this.getWidth() - insets.left - insets.right, this.getHeight()  - insets.top - insets.bottom);
                 this.setVisible(false);
                 Thread.sleep(200);
-                testCapture.setRectangle(area);
-                ImageIcon img = new ImageIcon(testCapture.capture());
+                capture.setRectangle(area);
+                ImageIcon img = new ImageIcon(capture.takePicture());
                 label = new JLabel(img);
                 this.getContentPane().removeAll();
                 this.getContentPane().add(label);

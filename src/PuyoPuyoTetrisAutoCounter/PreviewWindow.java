@@ -12,8 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PreviewWindow implements Initializable {
-    TestCapture p1Capture;
-    TestCapture p2Capture;
+    Capture p1Capture;
+    Capture p2Capture;
     @FXML
     ImageView player1view;
     @FXML
@@ -23,8 +23,8 @@ public class PreviewWindow implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             running = false;
-            p1Capture = new TestCapture();
-            p2Capture = new TestCapture();
+            p1Capture = new Capture();
+            p2Capture = new Capture();
         } catch (AWTException e) {
             System.out.println("Catch AWTException");
             e.printStackTrace();
@@ -49,10 +49,10 @@ public class PreviewWindow implements Initializable {
         new Thread(() -> {
             while(true){
                 long time = System.currentTimeMillis();
-                BufferedImage bufferedImage1 = p1Capture.capture();
+                BufferedImage bufferedImage1 = p1Capture.takePicture();
                 WritableImage img = SwingFXUtils.toFXImage(bufferedImage1,null);
                 player1view.setImage(img);
-                BufferedImage bufferedImage2 = p2Capture.capture();
+                BufferedImage bufferedImage2 = p2Capture.takePicture();
                 WritableImage img2 = SwingFXUtils.toFXImage(bufferedImage2,null);
                 player2view.setImage(img2);
                 time = System.currentTimeMillis() - time;

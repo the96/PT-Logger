@@ -1,10 +1,13 @@
 package PuyoPuyoTetrisAutoCounter;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -45,6 +48,10 @@ public class Controller implements Initializable {
 
     public void setStage (Stage stage) {
         this.stage = stage;
+        this.stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(1);
+        });
     }
 
     public void openSelectArea() {
@@ -55,8 +62,23 @@ public class Controller implements Initializable {
         }
     }
 
+    private static boolean isValidArea(Rectangle area) {
+        return area.x != 0 && area.y != 0 && area.width != 0 && area.height !=0;
+    }
+
     @FXML
     public void openPreview() {
+        boolean isValidP1 = isValidArea(p1Area);
+        boolean isValidP2 = isValidArea(p2Area);
+        if (!isValidP1 || !isValidP2) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,"", ButtonType.CLOSE);
+            alert.setTitle("Error: invalid area");
+            alert.getDialogPane().setContentText("Invalid area:" + (isValidP1?"":" P1") + (isValidP2?"":" P2") + "\r\n"
+                                                + "Please Set Area.");
+            alert.showAndWait();
+            return;
+        }
+        completeSetArea();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("preview.fxml"));
             SplitPane splitPane = loader.load();

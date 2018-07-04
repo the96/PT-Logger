@@ -3,14 +3,14 @@ package PuyoPuyoTetrisAutoCounter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TestCapture{
+public class Capture {
 	private Robot robot;
 	private Rectangle area;
-	TestCapture() throws AWTException {
+	Capture() throws AWTException {
 		this.robot = new Robot();
 		this.area = new Rectangle(0,0,600,600);
 	}
-	TestCapture(Rectangle rectangle) throws AWTException{
+	Capture(Rectangle rectangle) throws AWTException{
 		this.robot = new Robot();
 		this.area = rectangle;
 	}
@@ -18,7 +18,7 @@ public class TestCapture{
 		this.area = rectangle;
 	}
 
-	public BufferedImage capture() {
+	public BufferedImage takePicture() {
 		return robot.createScreenCapture(area);
 	}
 }
