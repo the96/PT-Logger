@@ -11,7 +11,9 @@ import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.io.BufferedInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,14 +74,17 @@ public class CountView implements Initializable {
                     switch (this.judge(bufferedImage1,bufferedImage2)) {
                         case WinnerMatcher.FAILED:
                             // Cannnot find winner logo
+                            System.out.println("cannot judge");
                             break;
                         case WinnerMatcher.PLAYER1WIN:
                             p1WinCnt++;
                             this.setP1Score(p1WinCnt);
+                            System.out.println("p1win");
                             break;
                         case WinnerMatcher.PLAYER2WIN:
                             p2WinCnt++;
                             this.setP2Score(p2WinCnt);
+                            System.out.println("p2win");
                             break;
                         default:
                             break;
@@ -96,15 +101,23 @@ public class CountView implements Initializable {
     }
 
     static Mat convertBufferedImageToMat(BufferedImage bufferedImage) {
-        byte[] data = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
+        int w = bufferedImage.getWidth();
+        int h = bufferedImage.getHeight();
+        int[] pixels = new int[w * h * 3];
+        bufferedImage.getRaster().getPixels(0, 0, w, h, pixels);
+        byte[] bytes = new byte[pixels.length];
+        for (int i = 0; i < pixels.length; i++) {
+            bytes[i] = (byte) pixels[i];
+        }
         Mat mat = new Mat(bufferedImage.getHeight(),bufferedImage.getWidth(),CvType.CV_8UC3);
-        mat.put(0,0,data);
+        mat.put(0,0,bytes);
         return mat;
     }
 
     public int judge(BufferedImage b1, BufferedImage b2) {
         Mat p1 = convertBufferedImageToMat(b1);
         Mat p2 = convertBufferedImageToMat(b2);
+        
         WinnerMatcher wm = new WinnerMatcher(p1, p2);
         return wm.judgeWinner();
     }
