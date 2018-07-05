@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="150.0" maxWidth="335.0" minHeight="150.0" minWidth="335.0" prefHeight="150.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PuyoPuyoTetrisAutoCounter.Controller">
+<GridPane maxHeight="210.0" maxWidth="310.0" minHeight="210.0" minWidth="310.0" prefHeight="210.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PuyoPuyoTetrisAutoCounter.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
-    <ColumnConstraints hgrow="NEVER" maxWidth="65.0" minWidth="65.0" prefWidth="65.0" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
   </columnConstraints>
   <rowConstraints>
@@ -20,9 +20,11 @@
     <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
       <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
       <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Button fx:id="openButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSelectArea" prefHeight="34.0" prefWidth="62.0" text="Open" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="openButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSelectArea" prefHeight="34.0" prefWidth="62.0" text="Open" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin></Button>
@@ -69,6 +71,14 @@
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
+      </Button>
+      <Button fx:id="countButton" mnemonicParsing="false" onAction="#countStart" text="Count" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
       </Button>
    </children>
 </GridPane>

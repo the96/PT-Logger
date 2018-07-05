@@ -9,10 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.io.IOException;
@@ -35,13 +34,18 @@ public class Controller implements Initializable {
     Rectangle p1Area, p2Area;
     Stage stage;
     Stage previewStage;
+    Stage countViewStage;
     PreviewWindow previewWindow;
+    CountView countView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         previewStage = new Stage();
         previewStage.initModality(Modality.NONE);
         previewStage.initOwner(stage);
+        countViewStage = new Stage();
+        countViewStage.initModality(Modality.NONE);
+        countViewStage.initOwner(stage);
         p1Area = new Rectangle(0,0,0,0);
         p2Area = new Rectangle(0,0,0,0);
     }
@@ -55,6 +59,7 @@ public class Controller implements Initializable {
     }
 
     public void openSelectArea() {
+        if (!readySelect())
         try {
             selectArea = new SelectArea();
         } catch (AWTException e) {
@@ -66,16 +71,26 @@ public class Controller implements Initializable {
         return area.x != 0 && area.y != 0 && area.width != 0 && area.height !=0;
     }
 
+    public boolean readySelect() {
+        return selectArea != null;
+    }
+
+    public boolean readyArea() {
+        return isValidArea(p1Area) && isValidArea(p2Area);
+    }
+
+    public void showAlertInvalidArea(boolean isValidP1, boolean isValidP2) {
+        Alert alert = new Alert(Alert.AlertType.ERROR,"", ButtonType.CLOSE);
+        alert.setTitle("Error: invalid area");
+        alert.getDialogPane().setContentText("Invalid area:" + (isValidP1?"":" P1") + (isValidP2?"":" P2") + "\r\n"
+                + "Please Set Area.");
+        alert.showAndWait();
+    }
+
     @FXML
     public void openPreview() {
-        boolean isValidP1 = isValidArea(p1Area);
-        boolean isValidP2 = isValidArea(p2Area);
-        if (!isValidP1 || !isValidP2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR,"", ButtonType.CLOSE);
-            alert.setTitle("Error: invalid area");
-            alert.getDialogPane().setContentText("Invalid area:" + (isValidP1?"":" P1") + (isValidP2?"":" P2") + "\r\n"
-                                                + "Please Set Area.");
-            alert.showAndWait();
+        if (!readyArea()) {
+            showAlertInvalidArea(isValidArea(p1Area),isValidArea(p2Area));
             return;
         }
         completeSetArea();
@@ -98,12 +113,20 @@ public class Controller implements Initializable {
 
     @FXML
     public void setPlayer1Area() {
-        p1Area = selectArea.getArea();
+        if (readySelect()) {
+            p1Area = selectArea.getArea();
+        } else {
+            openSelectArea();
+        }
     }
 
     @FXML
     public void setPlayer2Area() {
-        p2Area = selectArea.getArea();
+        if (readySelect()) {
+            p2Area = selectArea.getArea();
+        } else {
+            openSelectArea();
+        }
     }
 
     @FXML
@@ -111,22 +134,23 @@ public class Controller implements Initializable {
         selectArea.closeWindow();
     }
 
-    public void judge() {
-        Mat p1 = Imgcodecs.imread("1p.png");
-        Mat p2 = Imgcodecs.imread("2p.png");
-        WinnerMatcher wm = new WinnerMatcher(p1, p2);
-        switch (wm.judgeWinner()) {
-            case WinnerMatcher.FAILED:
-                System.out.println("judge failed");
-                break;
-            case WinnerMatcher.PLAYER1WIN:
-                System.out.println("Player 1 win");
-                break;
-            case WinnerMatcher.PLAYER2WIN:
-                System.out.println("Player 2 win");
-                break;
-            default:
-                break;
+    @FXML
+    public void countStart() {
+        if (!readyArea()) {
+            showAlertInvalidArea(isValidArea(p1Area),isValidArea(p2Area));
+            return;
+        }
+        completeSetArea();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("countView.fxml"));
+            GridPane gridPane = loader.load();
+            countView = loader.getController();
+            countViewStage.setScene(new Scene(gridPane));
+            countViewStage.show();
+            countView.startCount(p1Area,p2Area);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }
