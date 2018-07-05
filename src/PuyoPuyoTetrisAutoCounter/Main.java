@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.opencv.core.Core;
 
+import java.net.URL;
+
 public class Main extends Application {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

@@ -1,10 +1,6 @@
 package PuyoPuyoTetrisAutoCounter;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -17,7 +13,7 @@ import org.opencv.imgproc.Imgproc;
  */
 
 public class WinnerMatcher {
-	static String win_path = "winner.png";
+	static String WIN_PATH = "winner.png";
 	public static final int PLAYER1WIN = 1;
 	public static final int PLAYER2WIN = 2;
 	public static final int FAILED = -1;
@@ -26,7 +22,7 @@ public class WinnerMatcher {
 	Mat p2;
 
 	public WinnerMatcher(Mat p1, Mat p2) {
-		win = Imgcodecs.imread(win_path,Imgcodecs.IMREAD_COLOR);
+		win = Imgcodecs.imread(WIN_PATH,Imgcodecs.IMREAD_COLOR);
 		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
 		this.p1 = p1;
 		this.p2 = p2;
@@ -34,7 +30,7 @@ public class WinnerMatcher {
 		Imgproc.resize(this.p2, this.p2, fieldSize);
 	}
 	public WinnerMatcher(String p1_path, String p2_path) {
-		win = Imgcodecs.imread(win_path,Imgcodecs.IMREAD_COLOR);
+		win = Imgcodecs.imread(WIN_PATH,Imgcodecs.IMREAD_COLOR);
 		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
 		this.p1 = Imgcodecs.imread(p1_path);
 		Imgproc.resize(this.p1, this.p1, fieldSize);
@@ -45,7 +41,7 @@ public class WinnerMatcher {
 	public int judgeWinner() {
 		double p1Win = matchWinner(p1,"P1");
 		double p2Win = matchWinner(p2,"P2");
-		if (p1Win < 0.6 && p2Win < 0.6)	{
+		if (p1Win < 0.7 && p2Win < 0.7)	{
 			return FAILED;
 		}
 		if (p1Win > p2Win) {
@@ -75,8 +71,6 @@ public class WinnerMatcher {
 			Point matchEnd = new Point(matching.x + win.cols(), matching.y + win.rows());
 			Imgproc.rectangle(resultImg, matching, matchEnd, new Scalar(255,0,0));
 		}
-		Imgcodecs.imwrite("res" + player + ".png", resultImg);
-		//System.out.println("max color:" + max);
 		return max;
 	}
 }
