@@ -51,7 +51,6 @@ public class WinnerMatcher {
 	public int judgeWinner() {
 		double p1Win = matchWinner(p1,"P1");
 		double p2Win = matchWinner(p2,"P2");
-		System.out.println(p1Win + ":" + p2Win);
 		if (p1Win < 0.6 && p2Win < 0.6)	{
 			return FAILED;
 		}

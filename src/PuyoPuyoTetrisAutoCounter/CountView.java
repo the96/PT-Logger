@@ -74,7 +74,6 @@ public class CountView implements Initializable {
                     BufferedImage bufferedImage1 = p1Capture.takePicture();
                     BufferedImage bufferedImage2 = p2Capture.takePicture();
                     time = System.currentTimeMillis() - time;
-                    //System.out.println("judge " + System.currentTimeMillis() / 1000);
                     switch (this.judge(bufferedImage1,bufferedImage2)) {
                         case WinnerMatcher.FAILED:
                             // Cannnot find winner logo
