@@ -24,6 +24,8 @@ public class CountView implements Initializable {
 
     int p1WinCnt, p2WinCnt;
     boolean judgeFlag;
+    boolean engFlag;
+    boolean threadRunning;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,9 +33,11 @@ public class CountView implements Initializable {
         p2WinCnt = 0;
         judgeFlag = false;
     }
-    public void startCount(Rectangle p1, Rectangle p2) {
+
+    public void startCount(Rectangle p1, Rectangle p2, boolean engFlag) {
         p1WinCnt = 0;
         p2WinCnt = 0;
+        this.engFlag = engFlag;
         this.setP1Score(p1WinCnt);
         this.setP2Score(p2WinCnt);
         //this.setP1Name(p1name);
@@ -41,7 +45,7 @@ public class CountView implements Initializable {
         try {
             Capture p1Cap = new Capture(p1);
             Capture p2Cap = new Capture(p2);
-            captureThread(p1Cap,p2Cap);
+            captureStart(p1Cap,p2Cap);
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -61,15 +65,16 @@ public class CountView implements Initializable {
     public void setP2Score(int num) {
         Platform.runLater(() -> p2Score.setText(num + ""));
     }
-    public void captureThread(Capture p1Capture, Capture p2Capture) {
+    public void captureStart(Capture p1Capture, Capture p2Capture) {
+            threadRunning = true;
             new Thread(() -> {
-                while(true){
+                while(threadRunning){
                     long time = System.currentTimeMillis();
                     long interval = 50;
                     BufferedImage bufferedImage1 = p1Capture.takePicture();
                     BufferedImage bufferedImage2 = p2Capture.takePicture();
                     time = System.currentTimeMillis() - time;
-                    System.out.println("judge " + System.currentTimeMillis() / 1000);
+                    //System.out.println("judge " + System.currentTimeMillis() / 1000);
                     switch (this.judge(bufferedImage1,bufferedImage2)) {
                         case WinnerMatcher.FAILED:
                             // Cannnot find winner logo
@@ -107,6 +112,10 @@ public class CountView implements Initializable {
             }).start();
     }
 
+    public void stopThread() {
+        threadRunning = false;
+    }
+
     static Mat convertBufferedImageToMat(BufferedImage bufferedImage) {
         int w = bufferedImage.getWidth();
         int h = bufferedImage.getHeight();
@@ -129,7 +138,7 @@ public class CountView implements Initializable {
     public int judge(BufferedImage b1, BufferedImage b2) {
         Mat p1 = convertBufferedImageToMat(b1);
         Mat p2 = convertBufferedImageToMat(b2);
-        WinnerMatcher wm = new WinnerMatcher(p1, p2);
+        WinnerMatcher wm = new WinnerMatcher(p1, p2, this.engFlag);
         return wm.judgeWinner();
     }
 }

@@ -14,6 +14,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class WinnerMatcher {
 	static String WIN_PATH = "winner.png";
+	static String ENG_WIN_PATH = "winner_eng.png";
 	public static final int PLAYER1WIN = 1;
 	public static final int PLAYER2WIN = 2;
 	public static final int FAILED = -1;
@@ -21,15 +22,24 @@ public class WinnerMatcher {
 	Mat p1;
 	Mat p2;
 
-	public WinnerMatcher(Mat p1, Mat p2) {
-		win = Imgcodecs.imread(WIN_PATH,Imgcodecs.IMREAD_COLOR);
+	public WinnerMatcher(Mat p1, Mat p2,boolean engFlag) {
+		if (engFlag) {
+			win = Imgcodecs.imread(ENG_WIN_PATH, Imgcodecs.IMREAD_COLOR);
+		} else {
+			win = Imgcodecs.imread(WIN_PATH, Imgcodecs.IMREAD_COLOR);
+		}
 		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
 		this.p1 = p1;
 		this.p2 = p2;
 		Imgproc.resize(this.p1, this.p1, fieldSize);
 		Imgproc.resize(this.p2, this.p2, fieldSize);
 	}
-	public WinnerMatcher(String p1_path, String p2_path) {
+	public WinnerMatcher(String p1_path, String p2_path, boolean engFlag) {
+		if (engFlag) {
+			win = Imgcodecs.imread(ENG_WIN_PATH, Imgcodecs.IMREAD_COLOR);
+		} else {
+			win = Imgcodecs.imread(WIN_PATH, Imgcodecs.IMREAD_COLOR);
+		}
 		win = Imgcodecs.imread(WIN_PATH,Imgcodecs.IMREAD_COLOR);
 		Size fieldSize = new Size(win.cols() * 1.384,win.rows() * 7.106);
 		this.p1 = Imgcodecs.imread(p1_path);
@@ -41,7 +51,8 @@ public class WinnerMatcher {
 	public int judgeWinner() {
 		double p1Win = matchWinner(p1,"P1");
 		double p2Win = matchWinner(p2,"P2");
-		if (p1Win < 0.7 && p2Win < 0.7)	{
+		System.out.println(p1Win + ":" + p2Win);
+		if (p1Win < 0.6 && p2Win < 0.6)	{
 			return FAILED;
 		}
 		if (p1Win > p2Win) {

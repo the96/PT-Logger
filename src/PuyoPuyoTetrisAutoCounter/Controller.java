@@ -5,10 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,6 +27,8 @@ public class Controller implements Initializable {
     Button previewButton;
     @FXML
     Button okButton;
+    @FXML
+    CheckBox englishFlag;
 
     SelectArea selectArea;
     Rectangle p1Area, p2Area;
@@ -46,6 +46,9 @@ public class Controller implements Initializable {
         countViewStage = new Stage();
         countViewStage.initModality(Modality.NONE);
         countViewStage.initOwner(stage);
+        countViewStage.setOnCloseRequest(e -> {
+            countView.threadRunning = false;
+        });
         p1Area = new Rectangle(0,0,0,0);
         p2Area = new Rectangle(0,0,0,0);
     }
@@ -147,7 +150,7 @@ public class Controller implements Initializable {
             countView = loader.getController();
             countViewStage.setScene(new Scene(gridPane));
             countViewStage.show();
-            countView.startCount(p1Area,p2Area);
+            countView.startCount(p1Area,p2Area,englishFlag.isSelected());
         } catch (IOException e) {
             e.printStackTrace();
         }
