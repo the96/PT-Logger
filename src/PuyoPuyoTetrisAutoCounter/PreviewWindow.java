@@ -19,6 +19,7 @@ public class PreviewWindow implements Initializable {
     @FXML
     ImageView player2view;
     boolean running;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -31,7 +32,7 @@ public class PreviewWindow implements Initializable {
         }
     }
 
-    public void setArea(Rectangle p1area,Rectangle p2area) {
+    public void setArea(Rectangle p1area, Rectangle p2area) {
         p1Capture.setRectangle(p1area);
         p2Capture.setRectangle(p2area);
     }
@@ -44,16 +45,24 @@ public class PreviewWindow implements Initializable {
         return false;
     }
 
+    public void closePreview() {
+        running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
     private void mainThread() {
         running = true;
         new Thread(() -> {
-            while(true){
+            while (running) {
                 long time = System.currentTimeMillis();
                 BufferedImage bufferedImage1 = p1Capture.takePicture();
-                WritableImage img = SwingFXUtils.toFXImage(bufferedImage1,null);
+                WritableImage img = SwingFXUtils.toFXImage(bufferedImage1, null);
                 player1view.setImage(img);
                 BufferedImage bufferedImage2 = p2Capture.takePicture();
-                WritableImage img2 = SwingFXUtils.toFXImage(bufferedImage2,null);
+                WritableImage img2 = SwingFXUtils.toFXImage(bufferedImage2, null);
                 player2view.setImage(img2);
                 time = System.currentTimeMillis() - time;
                 if (time <= 16) {
@@ -66,4 +75,5 @@ public class PreviewWindow implements Initializable {
             }
         }).start();
     }
+
 }

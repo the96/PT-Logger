@@ -43,11 +43,14 @@ public class Controller implements Initializable {
         previewStage = new Stage();
         previewStage.initModality(Modality.NONE);
         previewStage.initOwner(stage);
+        previewStage.setOnCloseRequest(e -> {
+            previewWindow.closePreview();
+        });
         countViewStage = new Stage();
         countViewStage.initModality(Modality.NONE);
         countViewStage.initOwner(stage);
         countViewStage.setOnCloseRequest(e -> {
-            countView.threadRunning = false;
+            countView.stopThread();
         });
         p1Area = new Rectangle(0,0,0,0);
         p2Area = new Rectangle(0,0,0,0);
@@ -59,15 +62,6 @@ public class Controller implements Initializable {
             Platform.exit();
             System.exit(1);
         });
-    }
-
-    public void openSelectArea() {
-        if (!readySelect())
-        try {
-            selectArea = new SelectArea();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
     }
 
     private static boolean isValidArea(Rectangle area) {
@@ -91,7 +85,25 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void openSelectArea() {
+        if (!readySelect()) {
+            try {
+                selectArea = new SelectArea();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+        } else if(!selectArea.isVisible()){
+            selectArea.reopenWindow();
+        }
+    }
+
+    @FXML
     public void openPreview() {
+        if (!(previewWindow == null) && previewWindow.isRunning()) {
+            previewWindow.closePreview();
+            previewStage.hide();
+            return;
+        }
         if (!readyArea()) {
             showAlertInvalidArea(isValidArea(p1Area),isValidArea(p2Area));
             return;

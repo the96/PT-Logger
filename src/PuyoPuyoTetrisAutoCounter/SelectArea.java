@@ -9,13 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SelectArea extends JFrame implements ComponentListener,NativeMouseInputListener {
+public class SelectArea extends JFrame implements ComponentListener,NativeMouseInputListener,WindowListener {
     Capture capture;
     Rectangle area;
     JLabel label;
@@ -32,16 +34,30 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
             e.printStackTrace();
         }
         GlobalScreen.addNativeMouseListener(this);
+        this.addWindowListener(this);
         this.setSize(200, 200);
         label = new JLabel();
         this.getContentPane().add(label);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
         capture = new Capture();
         reloadBackground();
         time = System.currentTimeMillis();
         flag = false;
         clickFlag = false;
+    }
+
+    public void reopenWindow() {
+        this.setVisible(true);
+        this.addComponentListener(this);
+        try {
+            GlobalScreen.registerNativeHook();
+            suppressLogger();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
+        GlobalScreen.addNativeMouseListener(this);
+
     }
 
     public void closeWindow() {
@@ -155,6 +171,41 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        this.closeWindow();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
 
     }
 }

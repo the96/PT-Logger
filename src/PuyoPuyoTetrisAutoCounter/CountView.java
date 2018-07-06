@@ -51,6 +51,10 @@ public class CountView implements Initializable {
         }
     }
 
+    public void stopCount() {
+        threadRunning = false;
+    }
+
     public void setP1Name (String name) {
 
     }
@@ -80,21 +84,21 @@ public class CountView implements Initializable {
                             judgeFlag = false;
                             break;
                         case WinnerMatcher.PLAYER1WIN:
+                            interval = 5000;
                             if (!judgeFlag) {
                                 p1WinCnt++;
                                 this.setP1Score(p1WinCnt);
                                 System.out.println("p1win");
                                 judgeFlag = true;
-                                interval = 1500;
                             }
                             break;
                         case WinnerMatcher.PLAYER2WIN:
+                            interval = 5000;
                             if (!judgeFlag) {
                                 p2WinCnt++;
                                 this.setP2Score(p2WinCnt);
                                 System.out.println("p2win");
                                 judgeFlag = true;
-                                interval = 1500;
                             }
                             break;
                         default:
