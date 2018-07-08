@@ -1,13 +1,22 @@
-### PuyoPuyoTetrisAutoCounter.PuyoPuyoTetrisAutoCounter
-WinnerMatcherは、ぷよぷよテトリスの1P,2Pそれぞれのフィールドの画像からどちらが勝者かを判定するプログラムです。
+## About
+PT MatchViewer is count tool for match on Puyo Puyo(TM) Tetris(R).  
+This can auto count number of each player win.  
+  
+This is NOT OFFICIAL SOFTWARE.
+** If I am contacted about stop distributing this from SEGA, I stop release now. **
+If you want to contact me, you can mail to this email address.
+'aar30px2[at]gmail.com'
 
-フィールドの画像をテンプレート画像のサイズに合わせるために、指定の縦横比のフィールドの画像を与える必要があります。将来的には動画やプレイ画面をキャプチャし、自動でカウントを行うプログラムにしたいと考えています。
+### How to install
+coming soon...
 
-必要な盤面の画像はフィールドの枠の左上から右下まで、縦横比の目安は170:335くらいです。自動でリサイズするので、大きくサイズが外れなければ検出可能です。
+### Licenses
+PT MatchViewer is covered under MIT License. 
 
-勝敗判定はフィールド中の「やった！」(英語なら「Yeah!」)を検出しています。「やった！」が隠れている場合は検出できない可能性があります。動作テスト時は、りんごちゃんのリンゴ程度なら問題なく検出できました。検出できないなどのバグを発見した場合は報告いただけると幸いです。
+* jnativehook
+GNU General Public / GNU Lesser General Public
+https://github.com/kwhat/jnativehook
 
-(2018/07/05)
-
-一応一通り実装を終えて、テスト段階に入りました。リリースまではもう少しかかりそうです;)
-
+* OpenCV 3.4.1
+3-clause BSD License -> License.txt
+https://opencv.org/license.html
