@@ -5,11 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.opencv.core.Core;
 
 public class Main extends Application {
     static {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary("./opencv_java341");
     }
     public static void main(String[] args) {
         launch(args);
