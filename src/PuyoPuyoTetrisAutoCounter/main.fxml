@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -47,7 +48,7 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Button>
-      <Label text="Player1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label fx:id="p1NameLabel" onMouseClicked="#renamePlayer1" text="Player1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
@@ -55,7 +56,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label text="Player2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label fx:id="p2NameLabel" onMouseClicked="#renamePlayer2" text="Player2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="16.0" />
          </font>
@@ -86,5 +87,15 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </CheckBox>
+      <TextField fx:id="p1NameField" alignment="CENTER_RIGHT" onAction="#renamedPlayer1" visible="false" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="90.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="p2NameField" alignment="CENTER_RIGHT" onAction="#renamedPlayer2" visible="false" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="90.0" />
+         </GridPane.margin>
+      </TextField>
    </children>
 </GridPane>

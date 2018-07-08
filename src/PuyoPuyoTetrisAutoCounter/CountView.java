@@ -40,8 +40,6 @@ public class CountView implements Initializable {
         this.engFlag = engFlag;
         this.setP1Score(p1WinCnt);
         this.setP2Score(p2WinCnt);
-        //this.setP1Name(p1name);
-        //this.setP2Name(p2name);
         try {
             Capture p1Cap = new Capture(p1);
             Capture p2Cap = new Capture(p2);
@@ -56,10 +54,10 @@ public class CountView implements Initializable {
     }
 
     public void setP1Name (String name) {
-
+        p1Name.setText(name);
     }
     public void setP2Name (String name) {
-
+        p2Name.setText(name);
     }
 
     public void setP1Score (int num) {

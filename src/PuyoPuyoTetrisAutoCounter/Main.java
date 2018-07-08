@@ -24,5 +24,6 @@ public class Main extends Application {
         primaryStage.show();
         Controller controller = loader.getController();
         controller.setStage(primaryStage);
+        SelectArea.registerNativeHook();
     }
 }

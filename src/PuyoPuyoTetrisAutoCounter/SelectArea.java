@@ -24,7 +24,6 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
 
     SelectArea() throws AWTException {
         this.addComponentListener(this);
-        registerNativeHook();
         GlobalScreen.addNativeMouseListener(this);
         this.addWindowListener(this);
         this.setSize(200, 200);
@@ -39,10 +38,11 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
         clickFlag = false;
     }
 
-    public void registerNativeHook() {
+    public static void registerNativeHook() {
         try {
             Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
             logger.setLevel(Level.WARNING);
+            logger.setUseParentHandlers(false);
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException e) {
             e.printStackTrace();
@@ -52,12 +52,6 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
     public void reopenWindow() {
         this.setVisible(true);
         this.addComponentListener(this);
-        try {
-            GlobalScreen.registerNativeHook();
-            registerNativeHook();
-        } catch (NativeHookException e) {
-            e.printStackTrace();
-        }
         GlobalScreen.addNativeMouseListener(this);
 
     }
@@ -80,7 +74,7 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
         return area;
     }
 
-    public void reloadBackground() throws AWTException {
+    public void reloadBackground() {
         new Thread(() -> {
             try {
                 Thread.sleep(50);
@@ -133,11 +127,7 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
     @Override
     public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
         if (flag) {
-            try {
-                reloadBackground();
-            } catch (AWTException e) {
-                e.printStackTrace();
-            }
+            reloadBackground();
             flag = false;
         }
     }
