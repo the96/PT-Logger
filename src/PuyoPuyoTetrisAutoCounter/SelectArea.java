@@ -11,9 +11,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,12 +24,7 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
 
     SelectArea() throws AWTException {
         this.addComponentListener(this);
-        try {
-            GlobalScreen.registerNativeHook();
-            suppressLogger();
-        } catch (NativeHookException e) {
-            e.printStackTrace();
-        }
+        registerNativeHook();
         GlobalScreen.addNativeMouseListener(this);
         this.addWindowListener(this);
         this.setSize(200, 200);
@@ -47,12 +39,22 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
         clickFlag = false;
     }
 
+    public void registerNativeHook() {
+        try {
+            Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+            logger.setLevel(Level.WARNING);
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void reopenWindow() {
         this.setVisible(true);
         this.addComponentListener(this);
         try {
             GlobalScreen.registerNativeHook();
-            suppressLogger();
+            registerNativeHook();
         } catch (NativeHookException e) {
             e.printStackTrace();
         }
@@ -76,30 +78,6 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
 
     public Rectangle getArea() {
         return area;
-    }
-
-    /**
-     * JNativeHookのロギングを抑制する。
-     *
-     * mainで一度設定してもそのあとでJNativeHook側でセットされるっぽいので別スレッドで2秒待ってセット。
-     *
-     * https://qiita.com/Getaji/items/8ad1887761ac222b61a2 からお借りしました
-     */
-    private static void suppressLogger() {
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, r -> {
-            Thread thread = new Thread(r);
-            thread.setDaemon(true);
-            return thread;
-        });
-
-        executorService.schedule(() -> {
-            final Logger jNativeHookLogger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-            if (jNativeHookLogger.getLevel() != Level.WARNING) {
-                synchronized (jNativeHookLogger) {
-                    jNativeHookLogger.setLevel(Level.WARNING);
-                }
-            }
-        }, 2, TimeUnit.SECONDS);
     }
 
     public void reloadBackground() throws AWTException {
