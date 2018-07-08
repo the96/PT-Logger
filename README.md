@@ -2,10 +2,10 @@
 PT MatchViewer is count tool for match on Puyo Puyo(TM) Tetris(R).  
 This can auto count number of each player win.  
   
-This is NOT OFFICIAL SOFTWARE.
-** If I am contacted about stop distributing this from SEGA, I stop release now. **
-If you want to contact me, you can mail to this email address.
-'aar30px2[at]gmail.com'
+This is NOT OFFICIAL SOFTWARE.  
+**If I am contacted about stop distributing this from SEGA, I stop release now.**  
+If you want to contact me, you can mail to this email address.  
+'aar30px2[at]gmail.com'  
 
 ### How to install
 coming soon...
