@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TemplateMatching:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/TemplateMatching_jar</output-path>
+    <root id="archive" name="TemplateMatching.jar">
+      <element id="module-output" name="TemplateMatching" />
+      <element id="extracted-dir" path="C:/opencv3.4.1/build/java/opencv-341.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jnativehook-2.1.0/jnativehook/jar/jnativehook-2.1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
