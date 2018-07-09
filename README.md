@@ -16,7 +16,7 @@ I can't check other environment.
 4. Click \[Open\] button to open select window to capture area.
 5. Move and resize window to match capture area.
 6. Click \[Set\] button to set Player 1,Player 2 area.
-  1. By click \[Preview\] button,you can preview capture area.
+   1. By click \[Preview\] button,you can preview capture area.
 7. By click player name, you can rewrite player name.
 8. By click \[Count\] button, start count number of each player win.
 
