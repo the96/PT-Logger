@@ -22,7 +22,7 @@ I can't check other environment.
 
 ## Licenses
 PT Logger is covered under MIT License.  
-But don't secondly contribute image file.  
+But don't secondly distribute image file.  
 Even if you  are damaged from use this, I don't take responsible.
 
 
