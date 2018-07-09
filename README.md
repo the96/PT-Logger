@@ -1,5 +1,5 @@
 ## About
-PT Logger is count tool for match on Puyo Puyo(TM) Tetris(R).  
+PT Logger is a counting tool for the match on Puyo Puyo(TM) Tetris(R).  
 This can auto count number of each player win.  
   
 This is NOT OFFICIAL SOFTWARE.  
@@ -10,20 +10,20 @@ If you want to contact me, you can mail to this email address.
 ## How to usage
 I checked execution on Windows 10 & Java 10.  
 I can't check other environment.  
-1. Install JRE 8~
+1. Install JRE 8~.
 2. Download PT Logger.
-3. Start PT Logger
-4. Click \[Open\] button to open select window to capture area.
-5. Move and resize window to match capture area.
+3. Start PT Logger.
+4. Click \[Open\] button to open select window to capturing area.
+5. Move and resize window to match capturing area.
 6. Click \[Set\] button to set Player 1,Player 2 area.
-   1. By click \[Preview\] button,you can preview capture area.
+   1. By click \[Preview\] button, you can preview capture area.
 7. By click player name, you can rewrite player name.
 8. By click \[Count\] button, start count number of each player win.
 
 ## Licenses
 PT Logger is covered under MIT License.  
 But don't secondly distribute image file.  
-Even if you  are damaged from use this, I don't take responsible.
+Even if you are damaged from use this, I don't take responsiblity.
 
 
 * jnativehook  
