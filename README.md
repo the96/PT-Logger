@@ -1,5 +1,5 @@
 ## About
-PT Logger is a counting tool for the match on Puyo Puyo(TM) Tetris(R).  
+PT Logger is a counter for the match on Puyo Puyo(TM) Tetris(R).  
 This can auto count number of each player win.  
   
 This is NOT OFFICIAL SOFTWARE.  
