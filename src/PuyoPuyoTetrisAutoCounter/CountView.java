@@ -7,9 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -127,6 +130,7 @@ public class CountView implements Initializable {
     }
 
     static Mat convertBufferedImageToMat(BufferedImage bufferedImage) {
+        // DataBuffereByteからbyte[]を生成する方法だと上手くキャストできなかったので自力で実装した
         int w = bufferedImage.getWidth();
         int h = bufferedImage.getHeight();
         int[] pixels = new int[w * h * 3];
@@ -138,10 +142,12 @@ public class CountView implements Initializable {
             何故かRとBの順番がMatlabとBufferedImageで逆になってるぽいので、
             0番目と2番目の要素を入れ替えている
              */
+
             bytes[i] = (byte) pixels[i+(i%3-1)*-2];
         }
         Mat mat = new Mat(bufferedImage.getHeight(),bufferedImage.getWidth(),CvType.CV_8UC3);
         mat.put(0,0,bytes);
+        Imgcodecs.imwrite("mat.png",mat);
         return mat;
     }
 
@@ -182,13 +188,5 @@ public class CountView implements Initializable {
     @FXML
     public void inputScoreP2() {
         Controller.inputNewText(p2Score,p2ScoreField);
-    }
-
-    public String getPlayer1Name() {
-        return p1NameField.getText();
-    }
-
-    public String getPlayer2Name() {
-        return p2NameField.getText();
     }
 }

@@ -34,11 +34,14 @@ public class Controller implements Initializable {
     @FXML
     Button okButton;
     @FXML
-    CheckBox englishFlag;
+    CheckBox engFlag;
+    @FXML
+    CheckBox fitFlag;
     @FXML
     TextField p1NameField;
     @FXML
     TextField p2NameField;
+    @FXML Button a;
 
     SelectArea selectArea;
     Rectangle p1Area, p2Area;
@@ -101,11 +104,13 @@ public class Controller implements Initializable {
         if (!readySelect()) {
             try {
                 selectArea = new SelectArea();
+                selectArea.setAutoFitFlag(fitFlag.isSelected());
             } catch (AWTException e) {
                 e.printStackTrace();
             }
         } else if (!selectArea.isVisible()) {
             selectArea.reopenWindow();
+            selectArea.setAutoFitFlag(fitFlag.isSelected());
         }
     }
 
@@ -163,6 +168,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void countStart() {
+        System.out.println(engFlag.getText());
         if (!readyArea()) {
             showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
             return;
@@ -176,7 +182,7 @@ public class Controller implements Initializable {
             countView.setP1Name(this.getPlayer1Name());
             countView.setP2Name(this.getPlayer2Name());
             countViewStage.show();
-            countView.startCount(p1Area, p2Area, englishFlag.isSelected());
+            countView.startCount(p1Area, p2Area, engFlag.isSelected());
             countView.setP1Name(getPlayer1Name());
             countView.setP2Name(getPlayer2Name());
         } catch (IOException e) {

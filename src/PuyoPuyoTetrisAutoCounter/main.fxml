@@ -82,11 +82,6 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <CheckBox fx:id="englishFlag" mnemonicParsing="false" text="English" GridPane.rowIndex="6">
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
-      </CheckBox>
       <TextField fx:id="p1NameField" alignment="CENTER_RIGHT" onAction="#renamedPlayer1" visible="false" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="90.0" />
@@ -103,5 +98,16 @@
             <Font size="14.0" />
          </font>
       </TextField>
+      <Button fx:id="a" mnemonicParsing="false" text="Button" GridPane.rowIndex="2" />
+      <CheckBox fx:id="fitFlag" mnemonicParsing="false" text="Auto Fit" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </CheckBox>
+      <CheckBox fx:id="engFlag" mnemonicParsing="false" text="English" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </CheckBox>
    </children>
 </GridPane>

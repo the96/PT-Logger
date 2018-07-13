@@ -21,12 +21,15 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
     long time;
     boolean flag;
     boolean clickFlag;
+    boolean autoFitFlag;
+    Rectangle befSize;
 
     SelectArea() throws AWTException {
         this.addComponentListener(this);
         GlobalScreen.addNativeMouseListener(this);
         this.addWindowListener(this);
         this.setSize(200, 200);
+        befSize = new Rectangle(200,200);
         label = new JLabel();
         this.getContentPane().add(label);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -49,25 +52,16 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
         }
     }
 
+    public void setAutoFitFlag (boolean flag) {
+        autoFitFlag = flag;
+    }
+
     public void reopenWindow() {
         this.setVisible(true);
-        this.addComponentListener(this);
-        GlobalScreen.addNativeMouseListener(this);
-
     }
 
     public void closeWindow() {
         this.setVisible(false);
-        try {
-            GlobalScreen.unregisterNativeHook();
-        } catch (NativeHookException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.finalize();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     public Rectangle getArea() {
@@ -77,9 +71,10 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
     public void reloadBackground() {
         new Thread(() -> {
             try {
-                Thread.sleep(50);
-                Insets insets = this.getInsets();
-                area = new Rectangle(this.getX() + insets.left,this.getY() + insets.top, this.getWidth() - insets.left - insets.right, this.getHeight()  - insets.top - insets.bottom);
+                Thread.sleep(100);
+                fittingAspectRatio();
+                Thread.sleep(100);
+                area = convertViewSize(new Rectangle(getX(),getY(),getWidth(),getHeight()));
                 this.setVisible(false);
                 Thread.sleep(200);
                 capture.setRectangle(area);
@@ -88,20 +83,67 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
                 this.getContentPane().removeAll();
                 this.getContentPane().add(label);
                 this.setVisible(true);
+                befSize = area;
+                flag = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
+    public Rectangle convertViewSize(Rectangle rec) {
+        Insets insets = this.getInsets();
+        Rectangle area = new Rectangle(rec.x + insets.left,rec.y + insets.top ,
+                rec.width - insets.left - insets.right,
+                rec.height - insets.top - insets.bottom);
+        return area;
+    }
+
+    public Dimension convertWindowSize(Rectangle rec) {
+        Insets insets = this.getInsets();
+        Dimension area = new Dimension(rec.width + insets.left + insets.right,
+                rec.height + insets.top + insets.bottom);
+        return area;
+    }
+
+    public Dimension convertWindowSize(int width, int height) {
+        Insets insets = this.getInsets();
+        Dimension area = new Dimension(width + insets.left + insets.right,
+                height + insets.top + insets.bottom);
+        return area;
+    }
+
+    public void fittingAspectRatio() {
+        Rectangle size = convertViewSize(new Rectangle(getX(),getY(),getWidth(),getHeight()));
+        double distWidth = Math.abs((double)1 - (double)size.width / (double)befSize.width);
+        double distHeight = Math.abs((double)1 - (double)size.height / (double)befSize.height);
+        // 変化量の大きいほうに合わせてアスペクト比を合わせる
+        double ratio = 1.81293302;
+        if (distWidth > distHeight) {
+            int h = (int) (size.width * ratio);
+            int w = (int) (h / ratio);
+            this.setSize(convertWindowSize(w,h));
+
+            System.out.println(w + "/" + h);
+        } else {
+            int w = (int) (size.height / ratio);
+            int h = (int) (w * ratio);
+            this.setSize(convertWindowSize(w,h));
+
+            System.out.println(w + "/" + h);
+        }
+    }
+
     @Override
     public void componentResized(ComponentEvent e) {
-        flag = true;
+        if (!flag)
+            flag = true;
     }
 
     @Override
     public void componentMoved(ComponentEvent e) {
-        flag = true;
+        if (!flag)
+            flag = true;
     }
 
     @Override
@@ -126,9 +168,14 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
 
     @Override
     public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
+        // 一瞬だけクリックしてウィンドウサイズを変更した場合にreloadが発動したいことがあるため、50ms待機しておく
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (flag) {
             reloadBackground();
-            flag = false;
         }
     }
 
