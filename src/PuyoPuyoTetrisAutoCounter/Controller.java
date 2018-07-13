@@ -115,6 +115,18 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void changeFitFlag() {
+        if (readySelect()) {
+            selectArea.setAutoFitFlag(fitFlag.isSelected());
+        }
+    }
+
+    @FXML
+    public void changeEngFlag() {
+        countView.setEngFlag(engFlag.isSelected());
+    }
+
+    @FXML
     public void openPreview() {
         if (!(previewWindow == null) && previewWindow.isRunning()) {
             previewWindow.closePreview();

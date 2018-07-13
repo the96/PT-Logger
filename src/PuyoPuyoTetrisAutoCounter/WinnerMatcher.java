@@ -32,7 +32,6 @@ public class WinnerMatcher {
 		this.p1 = p1;
 		this.p2 = p2;
 		Imgproc.resize(this.p1, this.p1, fieldSize);
-		Imgcodecs.imwrite("resized.png",this.p1);
 		Imgproc.resize(this.p2, this.p2, fieldSize);
 	}
 	public WinnerMatcher(String p1_path, String p2_path, boolean engFlag) {

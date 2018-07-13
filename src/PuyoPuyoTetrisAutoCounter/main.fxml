@@ -98,12 +98,12 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <CheckBox fx:id="fitFlag" mnemonicParsing="false" text="Auto Fit" GridPane.rowIndex="5">
+      <CheckBox fx:id="fitFlag" mnemonicParsing="false" onAction="#changeFitFlag" text="Auto Fit" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </CheckBox>
-      <CheckBox fx:id="engFlag" mnemonicParsing="false" text="English" GridPane.rowIndex="6">
+      <CheckBox fx:id="engFlag" mnemonicParsing="false" onAction="#changeEngFlag" text="English" GridPane.rowIndex="6">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>

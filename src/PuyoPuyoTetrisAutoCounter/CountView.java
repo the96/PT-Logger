@@ -79,6 +79,11 @@ public class CountView implements Initializable {
     public void setP2Score(int num) {
         Platform.runLater(() -> p2Score.setText(num + ""));
     }
+
+    public void setEngFlag(boolean flag) {
+        engFlag = flag;
+    }
+
     public void captureStart(Capture p1Capture, Capture p2Capture) {
             threadRunning = true;
             new Thread(() -> {
@@ -147,7 +152,6 @@ public class CountView implements Initializable {
         }
         Mat mat = new Mat(bufferedImage.getHeight(),bufferedImage.getWidth(),CvType.CV_8UC3);
         mat.put(0,0,bytes);
-        Imgcodecs.imwrite("mat.png",mat);
         return mat;
     }
 

@@ -71,8 +71,10 @@ public class SelectArea extends JFrame implements ComponentListener,NativeMouseI
     public void reloadBackground() {
         new Thread(() -> {
             try {
-                Thread.sleep(100);
-                fittingAspectRatio();
+                if (autoFitFlag) {
+                    Thread.sleep(100);
+                    fittingAspectRatio();
+                }
                 Thread.sleep(100);
                 area = convertViewSize(new Rectangle(getX(),getY(),getWidth(),getHeight()));
                 this.setVisible(false);
