@@ -12,7 +12,8 @@
 
 <GridPane maxHeight="210.0" maxWidth="310.0" minHeight="210.0" minWidth="310.0" prefHeight="210.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PuyoPuyoTetrisAutoCounter.Controller">
   <columnConstraints>
-    <ColumnConstraints hgrow="NEVER" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="220.0" minWidth="110.0" prefWidth="220.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="220.0" minWidth="110.0" prefWidth="220.0" />
     <ColumnConstraints hgrow="NEVER" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
   </columnConstraints>
@@ -26,11 +27,11 @@
       <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Button fx:id="openButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSelectArea" prefHeight="34.0" prefWidth="62.0" text="Open" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="openButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSelectArea" prefHeight="34.0" prefWidth="62.0" text="Open" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin></Button>
-      <Label prefHeight="49.0" prefWidth="222.0" text="Open Select Area Window" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label prefHeight="49.0" prefWidth="222.0" text="Open Select Area Window" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="18.0" />
          </font>
@@ -38,17 +39,17 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="setPlayer1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setPlayer1Area" text="Set" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+      <Button fx:id="setPlayer1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setPlayer1Area" text="Set" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="setPlayer2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setPlayer2Area" text="Set" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+      <Button fx:id="setPlayer2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setPlayer2Area" text="Set" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Button>
-      <Label fx:id="p1NameLabel" minWidth="30.0" onMouseClicked="#renamePlayer1" text="Player1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label fx:id="p1NameLabel" minWidth="30.0" onMouseClicked="#renamePlayer1" text="Player1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
@@ -56,7 +57,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="p2NameLabel" minWidth="30.0" onMouseClicked="#renamePlayer2" text="Player2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label fx:id="p2NameLabel" minWidth="30.0" onMouseClicked="#renamePlayer2" text="Player2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="16.0" />
          </font>
@@ -64,17 +65,17 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="okButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#completeSetArea" text="OK" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="okButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#completeSetArea" text="OK" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="previewButton" mnemonicParsing="false" onAction="#openPreview" text="Preview" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="previewButton" mnemonicParsing="false" onAction="#openPreview" text="Preview" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="countButton" mnemonicParsing="false" onAction="#countStart" text="Count" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+      <Button fx:id="countButton" mnemonicParsing="false" onAction="#countStart" text="Count" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
@@ -108,5 +109,20 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </CheckBox>
+      <CheckBox fx:id="setCountFlag" mnemonicParsing="false" text="SetCount" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </CheckBox>
+      <TextField fx:id="setCountNumber" alignment="CENTER_RIGHT" maxWidth="70.0" onAction="#isValidSetCountField" text="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </TextField>
+      <Label text="Set:" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </Label>
    </children>
 </GridPane>

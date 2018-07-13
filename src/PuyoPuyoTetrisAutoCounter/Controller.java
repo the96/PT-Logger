@@ -38,10 +38,13 @@ public class Controller implements Initializable {
     @FXML
     CheckBox fitFlag;
     @FXML
+    CheckBox setCountFlag;
+    @FXML
     TextField p1NameField;
     @FXML
     TextField p2NameField;
-    @FXML Button a;
+    @FXML
+    TextField setCountNumber;
 
     SelectArea selectArea;
     Rectangle p1Area, p2Area;
@@ -83,20 +86,54 @@ public class Controller implements Initializable {
         return area.x != 0 && area.y != 0 && area.width != 0 && area.height != 0;
     }
 
+    public static void showAlertInvalidArea(boolean isValidP1, boolean isValidP2) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.CLOSE);
+        alert.setTitle("Error: invalid area");
+        alert.getDialogPane().setContentText("Invalid area:" + (isValidP1 ? "" : " P1") + (isValidP2 ? "" : " P2") + "\r\n"
+                + "Please Set Area.");
+        alert.showAndWait();
+    }
+    public static void showAlertNotNumber() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.CLOSE);
+        alert.setTitle("Error: invalid input");
+        alert.getDialogPane().setContentText("Please input number.");
+        alert.showAndWait();
+    }
+    public static boolean isValidNumber(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            showAlertNotNumber();
+        }
+        return false;
+    }
+
+    public static void rewriteLabel(Label label, TextField field) {
+        label.setText(field.getText());
+        field.setVisible(false);
+        label.setVisible(true);
+    }
+
+    public static boolean rewriteLabelNumber(Label label,TextField field) {
+        if (Controller.isValidNumber(field.getText())) {
+            rewriteLabel(label, field);
+            return true;
+        }
+        return false;
+    }
+
+    public static void inputNewText(Label label, TextField field) {
+        field.setText(label.getText());
+        label.setVisible(false);
+        field.setVisible(true);
+    }
     public boolean readySelect() {
         return selectArea != null;
     }
 
     public boolean readyArea() {
         return isValidArea(p1Area) && isValidArea(p2Area);
-    }
-
-    public void showAlertInvalidArea(boolean isValidP1, boolean isValidP2) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "", ButtonType.CLOSE);
-        alert.setTitle("Error: invalid area");
-        alert.getDialogPane().setContentText("Invalid area:" + (isValidP1 ? "" : " P1") + (isValidP2 ? "" : " P2") + "\r\n"
-                + "Please Set Area.");
-        alert.showAndWait();
     }
 
     @FXML
@@ -123,7 +160,9 @@ public class Controller implements Initializable {
 
     @FXML
     public void changeEngFlag() {
-        countView.setEngFlag(engFlag.isSelected());
+        if (null != countView) {
+            countView.setEngFlag(engFlag.isSelected());
+        }
     }
 
     @FXML
@@ -134,7 +173,7 @@ public class Controller implements Initializable {
             return;
         }
         if (!readyArea()) {
-            showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
+            Controller.showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
             return;
         }
         completeSetArea();
@@ -150,6 +189,36 @@ public class Controller implements Initializable {
             } else {
                 System.out.println("failed to run preview");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void countStart() {
+        System.out.println(engFlag.getText());
+        if (!readyArea()) {
+            showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
+            return;
+        }
+        if (!isValidNumber(setCountNumber.getText())) return;
+        completeSetArea();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("countView.fxml"));
+            GridPane gridPane = loader.load();
+            Scene scene = new Scene(gridPane);
+            countView = loader.getController();
+            countViewStage.setScene(scene);
+            countView.setGridPane(gridPane);
+            countView.setP1Name(this.getPlayer1Name());
+            countView.setP2Name(this.getPlayer2Name());
+            countViewStage.show();
+            countView.startCount(p1Area, p2Area, engFlag.isSelected());
+            countView.setP1Name(getPlayer1Name());
+            countView.setP2Name(getPlayer2Name());
+            countView.setNum(Integer.parseInt(setCountNumber.getText()));
+            countView.setCountVisible(setCountFlag.isSelected());
+            countViewStage.sizeToScene();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,33 +242,16 @@ public class Controller implements Initializable {
         }
     }
 
+    public String getPlayer1Name() {
+        return p1NameField.getText();
+    }
+
+    public String getPlayer2Name() {
+        return p2NameField.getText();
+    }
     @FXML
     public void completeSetArea() {
         selectArea.closeWindow();
-    }
-
-    @FXML
-    public void countStart() {
-        System.out.println(engFlag.getText());
-        if (!readyArea()) {
-            showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
-            return;
-        }
-        completeSetArea();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("countView.fxml"));
-            GridPane gridPane = loader.load();
-            countView = loader.getController();
-            countViewStage.setScene(new Scene(gridPane));
-            countView.setP1Name(this.getPlayer1Name());
-            countView.setP2Name(this.getPlayer2Name());
-            countViewStage.show();
-            countView.startCount(p1Area, p2Area, engFlag.isSelected());
-            countView.setP1Name(getPlayer1Name());
-            countView.setP2Name(getPlayer2Name());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -222,23 +274,9 @@ public class Controller implements Initializable {
         Controller.rewriteLabel(p2NameLabel,p2NameField);
     }
 
-    public static void rewriteLabel(Label label, TextField field) {
-        label.setText(field.getText());
-        field.setVisible(false);
-        label.setVisible(true);
+    @FXML
+    public void isValidSetCountField(){
+        Controller.isValidNumber(setCountNumber.getText());
     }
 
-    public static void inputNewText(Label label, TextField field) {
-        field.setText(label.getText());
-        label.setVisible(false);
-        field.setVisible(true);
-    }
-
-    public String getPlayer1Name() {
-        return p1NameField.getText();
-    }
-
-    public String getPlayer2Name() {
-        return p2NameField.getText();
-    }
 }

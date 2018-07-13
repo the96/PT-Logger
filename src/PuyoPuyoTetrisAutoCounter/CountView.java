@@ -1,22 +1,25 @@
 package PuyoPuyoTetrisAutoCounter;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class CountView implements Initializable {
+public class CountView implements Initializable{
     @FXML
     Label p1Name;
     @FXML
@@ -26,6 +29,14 @@ public class CountView implements Initializable {
     @FXML
     Label p2Score;
     @FXML
+    Label p1SetLabel;
+    @FXML
+    Label p2SetLabel;
+    @FXML
+    Label winCountLabel;
+    @FXML
+    Label winCount;
+    @FXML
     TextField p1NameField;
     @FXML
     TextField p2NameField;
@@ -33,17 +44,32 @@ public class CountView implements Initializable {
     TextField p1ScoreField;
     @FXML
     TextField p2ScoreField;
+    @FXML
+    TextField p1SetField;
+    @FXML
+    TextField p2SetField;
+    GridPane gridPane;
 
     int p1WinCnt, p2WinCnt;
+    int p1SetCnt, p2SetCnt;
+    int p1Sets, p2Sets;
+    int setNum;
     boolean judgeFlag;
     boolean engFlag;
     boolean threadRunning;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         p1WinCnt = 0;
         p2WinCnt = 0;
+        p1SetCnt = 0;
+        p2SetCnt = 0;
+        p1Sets = 0;
+        p2Sets = 0;
+        setNum = 2;
         judgeFlag = false;
+    }
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
     }
 
     public void startCount(Rectangle p1, Rectangle p2, boolean engFlag) {
@@ -75,13 +101,27 @@ public class CountView implements Initializable {
     public void setP1Score (int num) {
         Platform.runLater(() -> p1Score.setText(num + ""));
     }
-
     public void setP2Score(int num) {
         Platform.runLater(() -> p2Score.setText(num + ""));
     }
 
+    public void setNum(int num) {
+        setNum = num;
+        winCount.setText(this.setNum + "");
+    }
+
     public void setEngFlag(boolean flag) {
         engFlag = flag;
+    }
+
+    public void setCountVisible(boolean flag) {
+        p1SetLabel.setVisible(flag);
+        p2SetLabel.setVisible(flag);
+        winCountLabel.setVisible(flag);
+        winCount.setVisible(flag);
+        if (!flag) {
+            gridPane.setPrefSize(gridPane.getWidth(),gridPane.getMinHeight());
+        }
     }
 
     public void captureStart(Capture p1Capture, Capture p2Capture) {
@@ -102,6 +142,7 @@ public class CountView implements Initializable {
                             interval = 5000;
                             if (!judgeFlag) {
                                 p1WinCnt++;
+                                p1SetCnt++;
                                 this.setP1Score(p1WinCnt);
                                 System.out.println("p1win");
                                 judgeFlag = true;
@@ -111,6 +152,7 @@ public class CountView implements Initializable {
                             interval = 5000;
                             if (!judgeFlag) {
                                 p2WinCnt++;
+                                p2SetCnt++;
                                 this.setP2Score(p2WinCnt);
                                 System.out.println("p2win");
                                 judgeFlag = true;
@@ -118,6 +160,17 @@ public class CountView implements Initializable {
                             break;
                         default:
                             break;
+                    }
+                    if (p1SetCnt >= setNum || p2SetCnt >= setNum) {
+                        if (p1SetCnt > p2SetCnt) {
+                            p1Sets++;
+                            Platform.runLater(() -> {p1SetLabel.setText(p1Sets + "");});
+                        } else {
+                            p2Sets++;
+                            Platform.runLater(() -> {p2SetLabel.setText(p2Sets + "");});
+                        }
+                        p1SetCnt = 0;
+                        p2SetCnt = 0;
                     }
                     if (time <= interval) {
                         try {
@@ -179,11 +232,13 @@ public class CountView implements Initializable {
     }
     @FXML
     public void overwriteScoreP1(){
-        Controller.rewriteLabel(p1Score,p1ScoreField);
+        if (Controller.rewriteLabelNumber(p1Score,p1ScoreField))
+            p1WinCnt = Integer.parseInt(p1ScoreField.getText());
     }
     @FXML
     public void overwriteScoreP2(){
-        Controller.rewriteLabel(p2Score,p2ScoreField);
+        if (Controller.rewriteLabelNumber(p2Score,p2ScoreField))
+            p2WinCnt = Integer.parseInt(p2ScoreField.getText());
     }
     @FXML
     public void inputScoreP1() {
@@ -192,5 +247,23 @@ public class CountView implements Initializable {
     @FXML
     public void inputScoreP2() {
         Controller.inputNewText(p2Score,p2ScoreField);
+    }
+    @FXML
+    public void overwriteSetsP1(){
+        if (Controller.rewriteLabelNumber(p1SetLabel,p1SetField))
+            p1Sets = Integer.parseInt(p1SetField.getText());
+    }
+    @FXML
+    public void overwriteSetsP2(){
+        if (Controller.rewriteLabelNumber(p2SetLabel,p2SetField))
+            p2Sets = Integer.parseInt(p2SetField.getText());
+    }
+    @FXML
+    public void inputSetsP1() {
+        Controller.inputNewText(p1SetLabel,p1SetField);
+    }
+    @FXML
+    public void inputSetsP2() {
+        Controller.inputNewText(p2SetLabel,p2SetField);
     }
 }
