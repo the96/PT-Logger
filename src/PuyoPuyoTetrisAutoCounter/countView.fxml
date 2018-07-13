@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -18,14 +19,14 @@
     <RowConstraints maxHeight="308.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="p1Name" text="Player 1" GridPane.valignment="TOP">
+      <Label fx:id="p1Name" onMouseClicked="#inputP1" text="Player 1" GridPane.valignment="TOP">
          <font>
             <Font size="27.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin></Label>
-      <Label fx:id="p2Name" text="Player 2" GridPane.columnIndex="2" GridPane.valignment="TOP">
+      <Label fx:id="p2Name" onMouseClicked="#inputP2" text="Player 2" GridPane.columnIndex="2" GridPane.valignment="TOP">
          <font>
             <Font size="27.0" />
          </font>
@@ -33,7 +34,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="p1Score" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Label fx:id="p1Score" onMouseClicked="#inputScoreP1" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="96.0" />
          </font>
@@ -41,7 +42,7 @@
             <Insets />
          </GridPane.margin>
       </Label>
-      <Label fx:id="p2Score" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Label fx:id="p2Score" onMouseClicked="#inputScoreP2" text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="96.0" />
          </font>
@@ -54,5 +55,17 @@
             <Font size="96.0" />
          </font>
       </Label>
+      <TextField fx:id="p1NameField" onAction="#renameP1" visible="false" />
+      <TextField fx:id="p2NameField" onAction="#renameP2" visible="false" GridPane.columnIndex="2" />
+      <TextField fx:id="p1ScoreField" onAction="#overwriteScoreP1" visible="false" GridPane.rowIndex="1">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="p2ScoreField" onAction="#overwriteScoreP2" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </TextField>
    </children>
 </GridPane>

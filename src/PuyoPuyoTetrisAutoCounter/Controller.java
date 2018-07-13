@@ -64,6 +64,8 @@ public class Controller implements Initializable {
         });
         p1Area = new Rectangle(0, 0, 0, 0);
         p2Area = new Rectangle(0, 0, 0, 0);
+        p1NameField.setText(p1NameLabel.getText());
+        p2NameField.setText(p2NameLabel.getText());
     }
 
     public void setStage(Stage stage) {
@@ -175,6 +177,8 @@ public class Controller implements Initializable {
             countView.setP2Name(this.getPlayer2Name());
             countViewStage.show();
             countView.startCount(p1Area, p2Area, englishFlag.isSelected());
+            countView.setP1Name(getPlayer1Name());
+            countView.setP2Name(getPlayer2Name());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,28 +186,34 @@ public class Controller implements Initializable {
 
     @FXML
     public void renamePlayer1() {
-        p1NameLabel.setVisible(false);
-        p1NameField.setVisible(true);
+        Controller.inputNewText(p1NameLabel,p1NameField);
     }
 
     @FXML
     public void renamePlayer2() {
-        p2NameLabel.setVisible(false);
-        p2NameField.setVisible(true);
+        Controller.inputNewText(p2NameLabel,p2NameField);
     }
 
     @FXML
     public void renamedPlayer1() {
-        p1NameLabel.setText(p1NameField.getText());
-        p1NameLabel.setVisible(true);
-        p1NameField.setVisible(false);
+        Controller.rewriteLabel(p1NameLabel,p1NameField);
     }
 
     @FXML
     public void renamedPlayer2() {
-        p2NameLabel.setText(p2NameField.getText());
-        p2NameLabel.setVisible(true);
-        p2NameField.setVisible(false);
+        Controller.rewriteLabel(p2NameLabel,p2NameField);
+    }
+
+    public static void rewriteLabel(Label label, TextField field) {
+        label.setText(field.getText());
+        field.setVisible(false);
+        label.setVisible(true);
+    }
+
+    public static void inputNewText(Label label, TextField field) {
+        field.setText(label.getText());
+        label.setVisible(false);
+        field.setVisible(true);
     }
 
     public String getPlayer1Name() {

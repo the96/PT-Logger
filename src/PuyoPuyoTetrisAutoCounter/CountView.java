@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
@@ -21,6 +22,14 @@ public class CountView implements Initializable {
     Label p1Score;
     @FXML
     Label p2Score;
+    @FXML
+    TextField p1NameField;
+    @FXML
+    TextField p2NameField;
+    @FXML
+    TextField p1ScoreField;
+    @FXML
+    TextField p2ScoreField;
 
     int p1WinCnt, p2WinCnt;
     boolean judgeFlag;
@@ -141,5 +150,45 @@ public class CountView implements Initializable {
         Mat p2 = convertBufferedImageToMat(b2);
         WinnerMatcher wm = new WinnerMatcher(p1, p2, this.engFlag);
         return wm.judgeWinner();
+    }
+    @FXML
+    public void renameP1() {
+        Controller.rewriteLabel(p1Name,p1NameField);
+    }
+    @FXML
+    public void renameP2() {
+        Controller.rewriteLabel(p2Name,p2NameField);
+    }
+    @FXML
+    public void inputP1() {
+        Controller.inputNewText(p1Name,p1NameField);
+    }
+    @FXML
+    public void inputP2() {
+        Controller.inputNewText(p2Name,p2NameField);
+    }
+    @FXML
+    public void overwriteScoreP1(){
+        Controller.rewriteLabel(p1Score,p1ScoreField);
+    }
+    @FXML
+    public void overwriteScoreP2(){
+        Controller.rewriteLabel(p2Score,p2ScoreField);
+    }
+    @FXML
+    public void inputScoreP1() {
+        Controller.inputNewText(p1Score,p1ScoreField);
+    }
+    @FXML
+    public void inputScoreP2() {
+        Controller.inputNewText(p2Score,p2ScoreField);
+    }
+
+    public String getPlayer1Name() {
+        return p1NameField.getText();
+    }
+
+    public String getPlayer2Name() {
+        return p2NameField.getText();
     }
 }

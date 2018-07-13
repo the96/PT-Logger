@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         Parent root = loader.load();
-        primaryStage.setTitle("Puyopuyo Tetris Winner matcher");
+        primaryStage.setTitle("PT Logger");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
