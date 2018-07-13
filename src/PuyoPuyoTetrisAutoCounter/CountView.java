@@ -144,7 +144,6 @@ public class CountView implements Initializable{
                                 p1WinCnt++;
                                 p1SetCnt++;
                                 this.setP1Score(p1WinCnt);
-                                System.out.println("p1win");
                                 judgeFlag = true;
                             }
                             break;
@@ -154,7 +153,6 @@ public class CountView implements Initializable{
                                 p2WinCnt++;
                                 p2SetCnt++;
                                 this.setP2Score(p2WinCnt);
-                                System.out.println("p2win");
                                 judgeFlag = true;
                             }
                             break;

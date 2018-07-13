@@ -196,7 +196,6 @@ public class Controller implements Initializable {
 
     @FXML
     public void countStart() {
-        System.out.println(engFlag.getText());
         if (!readyArea()) {
             showAlertInvalidArea(isValidArea(p1Area), isValidArea(p2Area));
             return;

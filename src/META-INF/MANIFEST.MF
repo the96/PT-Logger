@@ -1,3 +1,3 @@
-Manifest-Version: 1.0
+Manifest-Version: b1.0
 Main-Class: PuyoPuyoTetrisAutoCounter.Main
 
