@@ -98,7 +98,6 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="a" mnemonicParsing="false" text="Button" GridPane.rowIndex="2" />
       <CheckBox fx:id="fitFlag" mnemonicParsing="false" text="Auto Fit" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
