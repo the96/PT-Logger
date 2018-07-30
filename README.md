@@ -11,7 +11,7 @@ If you want to contact me, you can mail to this email address.
 I checked execution on Windows 10 & Java 10.  
 I can't check other environment.  
 1. Install JRE 8~.
-2. [Download PT Logger](https://github.com/the96/PT-Logger/releases/tag/ver1.0_beta).
+2. [Download PT Logger](https://github.com/the96/PT-Logger/releases).
 3. Start PT Logger.
 4. Click \[Open\] button to open select window to capturing area.
 5. Move and resize window to match capturing area.
